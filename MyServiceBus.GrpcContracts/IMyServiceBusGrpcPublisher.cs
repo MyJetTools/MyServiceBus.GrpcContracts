@@ -43,7 +43,6 @@ namespace MyServiceBus.GrpcContracts
                     BinaryData = chunk.ToArray()
                 };
 
-
                 pos += chunkSize;
             }
 
@@ -55,6 +54,19 @@ namespace MyServiceBus.GrpcContracts
             ProtoBuf.Serializer.Serialize(memStream, messages);
 
             return grpc.PublishBinaryAsync(memStream.SplitToPayloads(maxPayloadSize).ToAsyncEnumerable());
+        }
+
+
+        public static async ValueTask<T> ParseFromPayloadAsync<T>(this IAsyncEnumerable<BinaryDataGrpcWrapper> messagesAsyncStream)
+        {
+            var memoryStream = new MemoryStream();
+
+            await foreach (var wrapper in messagesAsyncStream)
+                memoryStream.Write(wrapper.BinaryData);
+
+            var payload = new ReadOnlyMemory<byte>(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
+
+            return ProtoBuf.Serializer.Deserialize<T>(payload);
         }
 
     }
