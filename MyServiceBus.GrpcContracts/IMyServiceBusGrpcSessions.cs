@@ -10,6 +10,6 @@ namespace MyServiceBus.GrpcContracts
         ValueTask<GreetingGrpcResponse> GreetingAsync(GreetingGrpcRequest request);
 
         [OperationContract(Action = "Ping")]
-        ValueTask<ResponseGrpc> PingAsync(PingGrpcContract request);
+        ValueTask<MyServiceBusGrpcResponse> PingAsync(PingGrpcContract request);
     }
 }

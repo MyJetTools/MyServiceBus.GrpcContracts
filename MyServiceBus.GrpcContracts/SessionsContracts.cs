@@ -27,16 +27,16 @@ namespace MyServiceBus.GrpcContracts
         public long SessionId { get; set; }
     }
 
-    public enum ResponseStatus
+    public enum MyServiceBusResponseStatus
     {
         
         Ok, InvalidSession, TopicNotFound
     }
 
     [DataContract]
-    public class ResponseGrpc
+    public class MyServiceBusGrpcResponse
     {
         [DataMember(Order = 1)]
-        public ResponseStatus Status { get; set; }
+        public MyServiceBusResponseStatus Status { get; set; }
     }
 }

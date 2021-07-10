@@ -11,10 +11,10 @@ namespace MyServiceBus.GrpcContracts
     {
 
         [OperationContract(Action = "CreateTopicIfNotExists")]
-        ValueTask<ResponseGrpc> CreateTopicIfNotExists(CreateTopicGrpcContract contract);
+        ValueTask<MyServiceBusGrpcResponse> CreateTopicIfNotExists(CreateTopicGrpcContract contract);
     
         [OperationContract(Action = "Publish")]
-        ValueTask<ResponseGrpc> PublishBinaryAsync(IAsyncEnumerable<BinaryDataGrpcWrapper> messages);
+        ValueTask<MyServiceBusGrpcResponse> PublishBinaryAsync(IAsyncEnumerable<BinaryDataGrpcWrapper> messages);
     }
 
     public static class MyServiceBusGrpcPublisher
@@ -47,13 +47,9 @@ namespace MyServiceBus.GrpcContracts
                 pos += chunkSize;
             }
 
-
         }
 
-        
-
-
-        public static ValueTask<ResponseGrpc> Publish(this IMyServiceBusGrpcPublisher grpc, MessagesToPublishGrpcContract messages, int maxPayloadSize)
+        public static ValueTask<MyServiceBusGrpcResponse> Publish(this IMyServiceBusGrpcPublisher grpc, MessagesToPublishGrpcContract messages, int maxPayloadSize)
         {
             var memStream = new MemoryStream();
             ProtoBuf.Serializer.Serialize(memStream, messages);
