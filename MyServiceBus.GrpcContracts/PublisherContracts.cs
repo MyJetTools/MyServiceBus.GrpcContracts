@@ -24,6 +24,9 @@ namespace MyServiceBus.GrpcContracts
         public string TopicId { get; set; }
         
         [DataMember(Order = 3)]
+        public bool PersistImmediately { get; set; }
+        
+        [DataMember(Order = 4)]
         public List<MessageContentGrpcModel> Messages { get; set; }
 
     }
