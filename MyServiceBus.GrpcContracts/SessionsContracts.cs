@@ -30,7 +30,7 @@ namespace MyServiceBus.GrpcContracts
     public enum ResponseStatus
     {
         
-        Ok, InvalidSession
+        Ok, InvalidSession, TopicNotFound
     }
 
     [DataContract]
